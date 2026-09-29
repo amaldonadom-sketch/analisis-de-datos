@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manejo de Datos Cuantitativos en Publicaciones Científicas</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow: hidden;
+        }
+
+        .serif {
+            font-family: 'Merriweather', serif;
+        }
+
+        .slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            transform: translateY(10px);
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glow-accent {
+            box-shadow: 0 0 25px -5px rgba(56, 189, 248, 0.25);
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col justify-between select-none">
+
+    <!-- Top Bar / Progress Bar -->
+    <header class="w-full p-4 flex justify-between items-center z-10 border-b border-slate-800 bg-slate-900/50 backdrop-blur">
+        <div class="flex items-center gap-2">
+            <i data-lucide="file-spreadsheet" class="text-sky-400 w-6 h-6"></i>
+            <span class="font-semibold text-sm tracking-wide text-slate-300 uppercase">Publicación Científica</span>
+        </div>
+        <!-- Progress Bar -->
+        <div class="w-1/3 bg-slate-800 h-2 rounded-full overflow-hidden hidden sm:block">
+            <div id="progress" class="bg-sky-400 h-full w-0 transition-all duration-300"></div>
+        </div>
+        <div class="text-xs text-slate-400 font-mono">
+            Diapositiva <span id="current-slide-num" class="text-sky-400 font-bold">1</span> de <span id="total-slides-num">10</span>
+        </div>
+    </header>
+
+    <!-- Main Presentation Container -->
+    <main class="flex-1 relative flex items-center justify-center p-4 md:p-8 overflow-y-auto">
+        
+        <!-- Slide 1: Portada -->
+        <section class="slide active flex-col items-center justify-center text-center max-w-4xl w-full">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20 mb-6 inline-block">Guía Metodológica</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6 serif">
+                Manejo de Datos Cuantitativos en la Publicación Científica
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 mb-8 max-w-2xl font-light">
+                Del dato bruto al artículo indexado: Rigor, transparencia y reproducibilidad estadística.
+            </p>
+            <div class="flex items-center gap-4 text-xs text-slate-500">
+                <span>Estructura iMRaD</span> &bull; 
+                <span>Normas ICMJE / APA</span> &bull; 
+                <span>Ciencia Abierta</span>
+            </div>
+        </section>
+
+        <!-- Slide 2: Ciclo de Vida del Dato -->
+        <section class="slide flex-col max-w-5xl w-full">
+            <h2 class="text-2xl md:text-3xl font-bold mb-2 text-white flex items-center gap-2">
+                <i data-lucide="git-commit" class="text-sky-400"></i> El Ciclo de Vida del Dato Científico
+            </h2>
+            <p class="text-slate-400 mb-8 text-sm">El rigor debe garantizarse en cada una de las 5 etapas continuas.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div class="glass-card p-4 rounded-xl border-l-4 border-l-sky-500">
+                    <div class="text-sky-400 font-bold text-lg mb-1">01</div>
+                    <div class="font-semibold text-white text-sm mb-2">Captura</div>
+                    <p class="text-xs text-slate-400">Digitalización estandarizada y diccionarios de variables.</p>
+                </div>
+                <div class="glass-card p-4 rounded-xl border-l-4 border-l-indigo-500">
+                    <div class="text-indigo-400 font-bold text-lg mb-1">02</div>
+                    <div class="font-semibold text-white text-sm mb-2">Limpieza</div>
+                    <p class="text-xs text-slate-400">Tratamiento reproducible de atípicos y nulos vía script.</p>
+                </div>
+                <div class="glass-card p-4 rounded-xl border-l-4 border-l-purple-500">
+                    <div class="text-purple-400 font-bold text-lg mb-1">03</div>
+                    <div class="font-semibold text-white text-sm mb-2">Análisis</div>
+                    <p class="text-xs text-slate-400">Pruebas estadísticas acordes a la distribución.</p>
+                </div>
+                <div class="glass-card p-4 rounded-xl border-l-4 border-l-pink-500">
+                    <div class="text-pink-400 font-bold text-lg mb-1">04</div>
+                    <div class="font-semibold text-white text-sm mb-2">Visualización</div>
+                    <p class="text-xs text-slate-400">Tablas autoexplicativas y figuras de alta resolución.</p>
+                </div>
+                <div class="glass-card p-4 rounded-xl border-l-4 border-l-emerald-500">
+                    <div class="text-emerald-400 font-bold text-lg mb-1">05</div>
+                    <div class="font-semibold text-white text-sm mb-2">Depósito</div>
+                    <p class="text-xs text-slate-400">Repositorios abiertos con asignación de DOI.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Captura y Digitalización -->
+        <section class="slide flex-col max-w-4xl w-full">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-white flex items-center gap-2">
+                <i data-lucide="database" class="text-sky-400"></i> Captura y Digitalización Sólida
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="font-semibold text-sky-400 mb-3 flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-4 h-4"></i> Buenas Prácticas
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li>• <strong>Diccionarios de Datos:</strong> Definir nombre, etiqueta, tipo y rango de cada variable antes de recolectar.</li>
+                        <li>• <strong>Validación en origen:</strong> Restringir campos en cuestionarios (ej. no permitir texto libre en edad).</li>
+                        <li>• <strong>Anonimización:</strong> Separar PII (Información Identificable) usando IDs alfanuméricos.</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="font-semibold text-slate-400 mb-3 flex items-center gap-2">
+                        <i data-lucide="wrench" class="w-4 h-4"></i> Herramientas Recomendadas
+                    </h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="p-3 bg-slate-800/60 rounded border border-slate-700">
+                            <span class="font-bold text-white">REDCap / KoboToolbox</span>
+                            <p class="text-xs text-slate-400 mt-1">Sistemas validados para investigación clínica y social.</p>
+                        </div>
+                        <div class="p-3 bg-slate-800/60 rounded border border-slate-700">
+                            <span class="font-bold text-rose-400">Evitar:</span>
+                            <p class="text-xs text-slate-400 mt-1">Uso de hojas de cálculo manuales no estructuradas para toma directa de datos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Limpieza de Datos -->
+        <section class="slide flex-col max-w-4xl w-full">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-white flex items-center gap-2">
+                <i data-lucide="filter" class="text-sky-400"></i> Limpieza de Datos (Data Cleaning)
+            </h2>
+            <div class="bg-rose-500/10 border border-rose-500/30 p-4 rounded-xl mb-6 text-rose-300 text-sm flex items-center gap-3">
+                <i data-lucide="alert-triangle" class="w-6 h-6 flex-shrink-0"></i>
+                <span><strong>Regla de Oro:</strong> NUNCA modifique la base de datos original (RAW). Realice la limpieza mediante código/scripts (R, Python, Syntax) para garantizar la auditoría.</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="glass-card p-5 rounded-xl">
+                    <h4 class="font-bold text-white mb-2">Valores Faltantes (Missing Data)</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Clasifique si son faltantes completamente al azar (MCAR), al azar (MAR) o no al azar (MNAR). Justifique en la metodología la eliminación por listas o la imputación múltiple.
+                    </p>
+                </div>
+                <div class="glass-card p-5 rounded-xl">
+                    <h4 class="font-bold text-white mb-2">Valores Atípicos (Outliers)</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Diferencie entre errores de digitación e información biológica/social extrema real. Reporte el análisis con y sin los atípicos si estos alteran la conclusión.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Selección de Pruebas (Interactive Selector) -->
+        <section class="slide flex-col max-w-4xl w-full">
+            <h2 class="text-2xl md:text-3xl font-bold mb-2 text-white flex items-center gap-2">
+                <i data-lucide="calculator" class="text-sky-400"></i> Selección del Análisis Estadístico
+            </h2>
+            <p class="text-slate-400 mb-6 text-sm">Interactúa para identificar la prueba adecuada según tus variables:</p>
+
+            <div class="glass-card p-6 rounded-xl border border-sky-500/30">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-2">Tipo de Variable / Objetivo</label>
+                        <select id="stat-type" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none focus:border-sky-400" onchange="updateStatRecommendation()">
+                            <option value="num-2g">Comparar 2 Grupos (Numérica)</option>
+                            <option value="num-ng">Comparar 3+ Grupos (Numérica)</option>
+                            <option value="cat">Asociación entre Categóricas</option>
+                            <option value="pred">Predicción de un Suceso</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-2">Distribución de Datos</label>
+                        <select id="stat-dist" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none focus:border-sky-400" onchange="updateStatRecommendation()">
+                            <option value="param">Normal (Paramétrica)</option>
+                            <option value="noparam">No Normal (No Paramétrica)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="p-4 bg-slate-900/80 rounded-lg border border-slate-800">
+                    <span class="text-xs text-slate-500 block mb-1">Prueba Recomendada & Reporte:</span>
+                    <div id="stat-result" class="text-sky-400 font-bold text-lg">t de Student (Reportar Media ± DE)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Tablas Rigurosas -->
+        <section class="slide flex-col max-w-4xl w-full">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-white flex items-center gap-2">
+                <i data-lucide="table" class="text-sky-400"></i> Presentación Tabular (Estándar APA/ICMJE)
+            </h2>
+            <div class="overflow-x-auto glass-card rounded-xl p-4 mb-4">
+                <table class="w-full text-xs text-left text-slate-300">
+                    <thead class="text-slate-400 border-b border-slate-700 uppercase bg-slate-800/50">
+                        <tr>
+                            <th class="p-3">Variable</th>
+                            <th class="p-3">Grupo A (n=50)</th>
+                            <th class="p-3">Grupo B (n=50)</th>
+                            <th class="p-3">Valor p</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800">
+                        <tr>
+                            <td class="p-3 font-medium text-white">Edad (años), Media (DE)</td>
+                            <td class="p-3">45.2 (8.1)</td>
+                            <td class="p-3">46.8 (7.9)</td>
+                            <td class="p-3">0.321</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium text-white">Sexo Femenino, n (%)</td>
+                            <td class="p-3">28 (56.0%)</td>
+                            <td class="p-3">25 (50.0%)</td>
+                            <td class="p-3">0.548</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium text-white">Biomarcador (ng/mL), Mediana (RIC)</td>
+                            <td class="p-3">12.4 (5.1-18.2)</td>
+                            <td class="p-3">24.1 (14.0-32.5)</td>
+                            <td class="p-3 text-sky-400 font-bold">&lt; 0.001</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-slate-400">• Tres líneas horizontales principales. Evitar líneas verticales. Incluir siempre unidades e intervalos de confianza.</p>
+        </section>
+
+        <!-- Slide 7: Visualización Efectiva -->
+        <section class="slide flex-col max-w-4xl w-full">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-white flex items-center gap-2">
+                <i data-lucide="bar-chart-3" class="text-sky-400"></i> Visualización de Datos
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="glass-card p-4 rounded-xl text-center">
+                    <i data-lucide="box" class="w-8 h-8 text-sky-400 mx-auto mb-2"></i>
+                    <h4 class="font-bold text-white text-sm">Boxplots / Violin</h4>
+                    <p class="text-xs text-slate-400 mt-2">Preferibles a los gráficos de barras para mostrar mediana, rango e intercuartiles.</p>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center">
+                    <i data-lucide="scatter-chart" class="w-8 h-8 text-indigo-400 mx-auto mb-2"></i>
+                    <h4 class="font-bold text-white text-sm">Scatter Plots</h4>
+                    <p class="text-xs text-slate-400 mt-2">Fundamentales para correlaciones y regresiones. Mostrar la línea de ajuste.</p>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center">
+                    <i data-lucide="git-commit" class="w-8 h-8 text-emerald-400 mx-auto mb-2"></i>
+                    <h4 class="font-bold text-white text-sm">Forest Plots</h4>
+                    <p class="text-xs text-slate-400 mt-2">Ideal para presentar Odds Ratios (OR) y Hazard Ratios (HR) con IC 95%.</p>
+                </div>
+            </div>
+            <div class="mt-6 text-xs text-slate-400 bg-slate-900 p-3 rounded border border-slate-800 text-center">
+                Mínimo <strong>300 DPI</strong> de resolución. Utilizar paletas de color aptas para daltonismo (ej. Viridis).
+            </div>
+        </section>
+
+        <!-- Slide 8: Ciencia Abierta -->
+        <section class="slide flex-col max-w-4xl w-full">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-white flex items-center gap-2">
+                <i data-lucide="lock-open" class="text-sky-400"></i> Transparencia y Ciencia Abierta
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card p-5 rounded-xl">
+                    <h3 class="font-bold text-white text-sm mb-3">Data Availability Statement</h3>
+                    <p class="text-xs text-slate-400 mb-4">Obligatorio en revistas indexadas (Q1/Q2). Debe indicar claramente cómo y dónde acceder a los datos.</p>
+                    <span class="text-xs text-emerald-400 bg-emerald-500/10 p-2 rounded block border border-emerald-500/20">
+                        "The datasets generated during the study are available in Zenodo repository, DOI: 10.5281/zenodo..."
+                    </span>
+                </div>
+                <div class="glass-card p-5 rounded-xl">
+                    <h3 class="font-bold text-white text-sm mb-3">Repositorios Certificados</h3>
+                    <ul class="text-xs text-slate-300 space-y-2">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-sky-400"></i> Zenodo</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-sky-400"></i> Open Science Framework (OSF)</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-sky-400"></i> Figshare / Dryad</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: Errores Frecuentes -->
+        <section class="slide flex-col max-w-4xl w-full">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-white flex items-center gap-2">
+                <i data-lucide="shield-alert" class="text-rose-400"></i> Errores Críticos a Evitar
+            </h2>
+            <div class="space-y-3">
+                <div class="glass-card p-4 rounded-xl border-l-4 border-l-rose-500 flex items-start gap-4">
+                    <div class="font-bold text-rose-400 text-sm">P-Hacking</div>
+                    <div class="text-xs text-slate-300">Probar múltiples pruebas o manipular la muestra iterativamente hasta forzar un $p < 0.05$.</div>
+                </div>
+                <div class="glass-card p-4 rounded-xl border-l-4 border-l-rose-500 flex items-start gap-4">
+                    <div class="font-bold text-rose-400 text-sm">HARKing</div>
+                    <div class="text-xs text-slate-300">Formular la hipótesis del estudio <em>después</em> de haber visto los resultados estadísticos (Hypothesizing After Results are Known).</div>
+                </div>
+                <div class="glass-card p-4 rounded-xl border-l-4 border-l-rose-500 flex items-start gap-4">
+                    <div class="font-bold text-rose-400 text-sm">Confundir Significancia</div>
+                    <div class="text-xs text-slate-300">Asumir que un valor $p$ estadísticamente significativo implica relevancia clínica o práctica real.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: Checklist Final -->
+        <section class="slide flex-col max-w-4xl w-full text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-white">Checklist Pre-Envío al Journal</h2>
+            <p class="text-slate-400 text-sm mb-6">Asegúrate de cumplir estos 4 puntos antes de someter tu manuscrito:</p>
+            
+            <div class="glass-card p-6 rounded-xl text-left max-w-xl mx-auto space-y-3 mb-8">
+                <label class="flex items-center gap-3 text-xs text-slate-200 cursor-pointer">
+                    <input type="checkbox" class="rounded border-slate-700 bg-slate-900 text-sky-500 focus:ring-0" checked>
+                    <span>Base de datos limpia, anonimizada y depositada con DOI.</span>
+                </label>
+                <label class="flex items-center gap-3 text-xs text-slate-200 cursor-pointer">
+                    <input type="checkbox" class="rounded border-slate-700 bg-slate-900 text-sky-500 focus:ring-0" checked>
+                    <span>Pruebas de normalidad reportadas y justificadas.</span>
+                </label>
+                <label class="flex items-center gap-3 text-xs text-slate-200 cursor-pointer">
+                    <input type="checkbox" class="rounded border-slate-700 bg-slate-900 text-sky-500 focus:ring-0" checked>
+                    <span>Intervalos de confianza (IC 95%) y magnitud del efecto incluidos.</span>
+                </label>
+                <label class="flex items-center gap-3 text-xs text-slate-200 cursor-pointer">
+                    <input type="checkbox" class="rounded border-slate-700 bg-slate-900 text-sky-500 focus:ring-0" checked>
+                    <span>Figuras en alta resolución (&gt;300 DPI) y tablas editables.</span>
+                </label>
+            </div>
+
+            <p class="text-xs text-slate-500 font-mono">¡Listo para la revisión por pares!</p>
+        </section>
+
+    </main>
+
+    <!-- Bottom Controls -->
+    <footer class="w-full p-4 border-t border-slate-800 bg-slate-900/50 backdrop-blur flex justify-between items-center z-10">
+        <button id="prev-btn" onclick="changeSlide(-1)" class="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition disabled:opacity-30 disabled:cursor-not-allowed">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i> Anterior
+        </button>
+        
+        <div class="text-xs text-slate-500 hidden sm:block">
+            Usa las flechas del teclado <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-400">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-400">→</kbd>
+        </div>
+
+        <button id="next-btn" onclick="changeSlide(1)" class="flex items-center gap-2 px-4 py-2 bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold text-xs rounded-lg transition">
+            Siguiente <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </button>
+    </footer>
+
+    <!-- Presentation Script -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides-num').innerText = totalSlides;
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+
+            // UI Updates
+            document.getElementById('current-slide-num').innerText = currentSlide + 1;
+            document.getElementById('progress').style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+            
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (currentSlide === totalSlides - 1) {
+                nextBtn.innerHTML = 'Finalizar <i data-lucide="check" class="w-4 h-4"></i>';
+                nextBtn.classList.replace('bg-sky-500', 'bg-emerald-500');
+                nextBtn.classList.replace('hover:bg-sky-400', 'hover:bg-emerald-400');
+            } else {
+                nextBtn.innerHTML = 'Siguiente <i data-lucide="chevron-right" class="w-4 h-4"></i>';
+                nextBtn.classList.replace('bg-emerald-500', 'bg-sky-500');
+                nextBtn.classList.replace('hover:bg-emerald-400', 'hover:bg-sky-400');
+            }
+            lucide.createIcons();
+        }
+
+        function changeSlide(direction) {
+            if (currentSlide + direction >= 0 && currentSlide + direction < totalSlides) {
+                currentSlide += direction;
+                updateSlide();
+            }
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') changeSlide(1);
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+
+        // Interactive Statistical Selector Logic
+        function updateStatRecommendation() {
+            const type = document.getElementById('stat-type').value;
+            const dist = document.getElementById('stat-dist').value;
+            const result = document.getElementById('stat-result');
+
+            if (type === 'num-2g') {
+                result.innerText = dist === 'param' ? 't de Student (Reportar Media ± DE)' : 'Mann-Whitney U (Reportar Mediana y RIC)';
+            } else if (type === 'num-ng') {
+                result.innerText = dist === 'param' ? 'ANOVA de un factor (Reportar Media ± DE)' : 'Kruskal-Wallis (Reportar Mediana y RIC)';
+            } else if (type === 'cat') {
+                result.innerText = 'Chi-cuadrado de Pearson / Prueba Exacta de Fisher';
+            } else if (type === 'pred') {
+                result.innerText = 'Regresión Logística (Reportar Odds Ratios e IC 95%)';
+            }
+        }
+
+        // Initialize Icons and Slide
+        lucide.createIcons();
+        updateSlide();
+    </script>
+</body>
+</html>
